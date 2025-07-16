@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>Sign Up - SanberBook</title>
-</head>
-<body>
+@extends('layouts.master')
 
+@section('title', 'Register')
+
+@section('content')
+<div class="container py-5">
   <h1>Buat Account Baru!</h1>
   <h2>Sign Up Form</h2>
 
-<form action="{{ url('/welcome') }}" method="get">
-    
+  <form action="{{ url('/welcome') }}" method="get">
     <h4>First name:</h4>
     <input type="text" name="first_name" style="text-transform: uppercase;" required>
 
@@ -24,14 +21,12 @@
     <input type="radio" name="gender" value="Female" id="female">
     <label for="female">Female</label><br>
 
-    <input type="radio" name="gender" value="Other" id="other">
-    <label for="other">Other</label>
-
     <h4>Nationality:</h4>
     <select name="nationality">
       <option value="Indonesian" selected>Indonesian</option>
       <option value="Singaporean">Singaporean</option>
       <option value="Malaysian">Malaysian</option>
+      <option value="Australian">Australian</option>
       <option value="Other">Other</option>
     </select>
 
@@ -51,9 +46,5 @@
     <br><br>
     <button type="submit">Sign Up</button>
   </form>
-
-</body>
-</html>
-
-
-
+</div>
+@endsection

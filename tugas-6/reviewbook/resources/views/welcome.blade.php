@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>Welcome to SanberBook</title>
-</head>
-<body>
+@extends('layouts.master')
 
-  <h1>Selamat datang {{ $firstName }} {{ $lastName }}!</h1>
-  <h4>Terima kasih telah bergabung di SanberBook. Social Media kita bersama!</h4>
+@section('title', 'Welcome - SanberBook')
 
-</body>
-</html>
+@section('content')
+<section class="py-5">
+  <div class="container text-center">
+    <h1 class="text-success">
+      Selamat datang, {{ ucfirst(strtolower($firstName)) }} {{ ucfirst(strtolower($lastName)) }}!</h1>
+    <h4 class="mt-4 text-muted">Terima kasih telah bergabung di <strong>SanberBook</strong>. Social Media kita bersama!</h4>
+  </div>
+</section>
+@endsection

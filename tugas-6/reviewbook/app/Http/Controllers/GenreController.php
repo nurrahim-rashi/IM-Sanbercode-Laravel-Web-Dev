@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Genre;
+use Illuminate\Support\Str;
 
 class GenreController extends Controller
 {
@@ -15,53 +16,52 @@ class GenreController extends Controller
     }
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|min:5|max:20',
-            'description' => 'required|string|min:10|max:1000',
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
         ]);
 
-        $now = Carbon::now();
-
-        DB::table('genres')->insert([
-            'name' => $validated['name'],
-            'description' => $validated['description'],
-            'created_at' => $now,
-            'updated_at' => $now,
+        Genre::create([
+            'name' => Str::title($request->name),
+            'description' => Str::ucfirst($request->description),
         ]);
 
-        return redirect('/genres')->with('success', 'Mantap! Genre berhasil ditambahkan! ✨');
+        return redirect('/genres')->with('success', 'Genre berhasil ditambahkan!');
     }
-    public function index()
+
+public function index()
+{
+    $genres = Genre::all();
+    return view('genre.index', compact('genres'));
+}
+
+public function show($id)
     {
-        $genres = DB::table('genres')->get();
-        return view('genre.index', compact('genres'));
-    }
-    public function show($id)
-    {
-        $genre = DB::table('genres')->find($id);
-        return view ('genre.detail', ['genre'=>$genre]);
+        $genre = Genre::with('books')->findOrFail($id);
+        return view ('genre.detail', compact('genre'));
     }
     public function edit($id)
     {
         $genre = DB::table('genres')->find($id);
         return view ('genre.edit', ['genre'=>$genre]);
     }
-    public function update(Request $request, $id)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|min:5|max:20',
-            'description' => 'required|string|min:10|max:1000',
-        ]);
 
-        DB::table('genres')
-            ->where('id', $id)
-            ->update([
-                'name' => $validated['name'],
-                'description' => $validated['description'],
-                'updated_at' => Carbon::now(),
-            ]);
-        return redirect('/genres')->with('success', 'Genre berhasil diperbarui! ✨');
-    }
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'name' => 'required',
+        'description' => 'required',
+    ]);
+
+    $genre = Genre::find($id);
+    $genre->update([
+        'name' => Str::title($request->name),
+        'description' => Str::ucfirst($request->description),
+    ]);
+
+    return redirect('/genres')->with('success', 'Genre berhasil diperbarui!');
+}
+
     public function destroy($id)
     {
         $genre = Genre::findOrFail($id);

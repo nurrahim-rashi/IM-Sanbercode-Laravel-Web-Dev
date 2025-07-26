@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class FormController extends Controller
@@ -11,14 +11,12 @@ class FormController extends Controller
         return view('register');
     }
 
-    public function welcome(Request $request)
-    {
-        $firstName = $request->input('first_name');
-        $lastName = $request->input('last_name');
+public function welcome(Request $request)
+{
+    $firstName = Str::title($request->input('first_name'));
+    $lastName = Str::title($request->input('last_name'));
 
-        return view('welcome', [
-            'firstName' => $firstName,
-            'lastName' => $lastName,
-        ]);
-    }
+    return view('welcome', compact('firstName', 'lastName'));
+}
+
 }

@@ -1,8 +1,11 @@
-@extends('layouts.master')
+@extends('layouts.sidebar')
 @section('title', 'Edit Genre') 
 @section('content')
 
 <div class="container py-5">
+        <a href="{{ url('/genres') }}" class="btn btn-outline-secondary mb-4">
+        <i class="bi bi-arrow-left"></i> Kembali
+    </a>
     <h1>Edit Genre {{ Str::title($genre->name) }}</h1>
     <form action="{{ url('/genres/'.$genre->id) }}" method="POST">
         @csrf
@@ -30,8 +33,7 @@
             <textarea class="form-control" name="description" rows="4" placeholder="Tulis deskripsi genre">{{ old('description', $genre->description) }}</textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Update ✏️</button>
-        <a href="{{ url('/genres') }}" class="btn btn-secondary ms-2">Batal</a>
+        <button type="submit" class="btn btn-primary">Update Genre ✏️</button>
     </form>
 </div>
 @endsection

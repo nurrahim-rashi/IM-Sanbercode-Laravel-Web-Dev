@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('summary');
-            $table->string('image');
-            $table->integer('stock');
+            $table->text('content');
+            $table->string('image')->nullable();
+            $table->string('image_url')->nullable();
+            $table->integer('stock')->nullable();
             $table->unsignedBigInteger('genre_id');
             $table->foreign('genre_id')->references('id')->on('genres');
             $table->timestamps();
